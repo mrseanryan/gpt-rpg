@@ -6,6 +6,22 @@ A simple RPG game built on Chat-GPT
 - Python3
 - Chat GTP 3.5 Turbo
 
+## Example Game Output
+
+```
+What is your name? >>Sean
+['short', 'RPG', 'zombie', 'medieval', 'vampire']
+Please pick one >>zombie
+
+    The world had changed. The dead walked among the living, their hunger insatiable. Survivors huddled in abandoned buildings, barricading themselves from the horrors outside. Fear was their constant companion. Sean was one of them. They had lost everything – their family, their home. Now, Sean fought to stay alive. Every day was a battle, a struggle for survival. Sean had become numb to the violence, the bloodshed. But deep down, a flicker of hope remained. Hope that one day, the world would be free from the clutches of the undead
+
+LOCATION: Underground Bunker
+Sean ventured out of the safehouse, his heart pounding in his chest. He navigated the desolate streets, his eyes scanning for any signs of movement. Suddenly, a group of zombies emerged from the shadows, their milky white eyes fixed on him. Sean sprinted, adrenaline fueling his every step. He ducked into an alley, narrowly avoiding their grasp. As he caught his breath, he noticed a flicker of light in the distance. Curiosity pulled him closer, and he discovered a hidden underground bunker. Inside, a group of survivors had established a thriving community. Sean finally felt a glimmer of hope, knowing he had found a place to call home.
+What next, Sean? >>call home
+LOCATION: underground bunker
+Sean took out his phone and dialed the familiar number.
+```
+
 ## Set up
 
 1. Install openai Python client.
