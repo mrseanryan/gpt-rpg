@@ -36,3 +36,4 @@ def send_prompt_messages(messages, temperature = 0):
     rsp = get_completion(prompt=None, temperature=temperature, messages=messages)
     print("=== RESPONSE ===")
     print(rsp)
+    return rsp
