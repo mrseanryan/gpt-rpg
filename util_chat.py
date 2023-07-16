@@ -1,6 +1,7 @@
 import openai
 
 import api_key_chatgpt_local as api_key
+import config
 
 openai.api_key = api_key.get_openai_key()
 
@@ -37,3 +38,8 @@ def send_prompt_messages(messages, temperature = 0):
     print("=== RESPONSE ===")
     print(rsp)
     return rsp
+
+def next_prompt(prompt):
+    if config.is_debug:
+        return send_prompt(prompt, temperature=config.TEMPERATURE)
+    return send_prompt(prompt, False, False, temperature=config.TEMPERATURE)

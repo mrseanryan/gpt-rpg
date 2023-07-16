@@ -36,7 +36,7 @@ def _get_VAMPIRE_PROMPT(user_name):
         In the dimly lit alley, a figure, {user_name}, emerged from the shadows. Pale skin, sharp fangs glinting in the moonlight. A vampire. Their eyes, blood-red and hungry, scanned the deserted streets. A prey was near. He moved swiftly, silently, like a predator stalking its prey. The scent of fear filled the air as he closed in on the victim. With a swift motion, he sank their fangs into the soft flesh, drinking the life force. The victim's body went limp, drained of all vitality. Another night, another feast for the vampire
         """
 
-def build_next_prompt(story_type, user_name, rsp_parsed, user_input, format = OUTPUT_FORMAT):
+def build_next_prompt(story_type, user_name, next_section_text, user_input, format = OUTPUT_FORMAT):
     return f"""
         Analyze the given {story_type} story text, and use the next-actions to generate the next part of the {story_type} story.
         The next-actions are what {user_name} does next.
@@ -47,7 +47,7 @@ def build_next_prompt(story_type, user_name, rsp_parsed, user_input, format = OU
 
         {format}
 
-    text: ```{rsp_parsed["next_section_text"]}```
+    text: ```{next_section_text}```
 
     {user_name}'s next-actions: ```{user_input}```
     """

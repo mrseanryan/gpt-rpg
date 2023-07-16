@@ -6,6 +6,11 @@ k -- choice of starting points
 -- save command -> store last response JSON
 
 - make a web server
+- add a simple web client (HTML)
+
+- add service role -> adult audience, advanced reader
+
+- add context 'history' (summary of previous messages)
 
 k -- ask user their name
 k -- ask to generate an ASCII art map of the current location
