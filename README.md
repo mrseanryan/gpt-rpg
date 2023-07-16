@@ -11,7 +11,7 @@ A simple RPG game built on Chat-GPT
 1. Install openai Python client.
 
 ```
-pip install openai redlines
+pip install openai
 ```
 
 2. Get an Open AI key
@@ -29,7 +29,7 @@ pip install openai redlines
 or
 
 ```
-python3 chat.py
+python3 main_cli.py
 ```
 
 ## Chat-GPT Notes
