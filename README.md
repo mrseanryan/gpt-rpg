@@ -6,7 +6,8 @@ A simple RPG game built on Chat-GPT
 - Python3
 - Chat GTP 3.5 Turbo
 
-## Example Game Output
+## Example Games
+### [zombie storyline]
 
 ```
 What is your name? >>Sean
@@ -20,6 +21,21 @@ Sean ventured out of the safehouse, his heart pounding in his chest. He navigate
 What next, Sean? >>call home
 LOCATION: underground bunker
 Sean took out his phone and dialed the familiar number.
+```
+
+### [RPG storyline]
+
+```
+In the dark forest, a lone warrior named Sean stood, a sword gleaming in the moonlight. Sean had journeyed far, seeking the ancient artifact that held the power to save the kingdom. The air was thick with tension as they cautiously moved forward, their senses alert for any sign of danger. Suddenly, a horde of goblins emerged from the shadows, their eyes filled with malice. With a swift swing of their blade, Sean the warrior engaged in a fierce battle, determined to protect their land and fulfill their destiny.
+---
+LOCATION: Dark Forest
+---
+>> As the goblins fell one by one, Sean could see the path ahead leading to an ancient temple. They knew deep inside that the artifact awaited them there. With adrenaline coursing through their veins, they made their way towards the temple, their heart pounding with anticipation.
+---
+LOCATION: Ancient Temple
+---
+>> As Sean stepped through the ancient doors of the temple, a wave of ancient energy washed over them. The air inside was heavy with the scent of incense and the sound of distant chanting echoed through the halls. Sean felt a mix of excitement and trepidation as they ventured deeper into the temple, the artifact calling out to them. The flickering torches along the walls cast eerie shadows, adding to the mystique of their journey.
+---
 ```
 
 ## Set up
