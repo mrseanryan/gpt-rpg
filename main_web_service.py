@@ -56,11 +56,17 @@ class MyServer(BaseHTTPRequestHandler):
         sid = self.generate_sid()
         self.cookie = "sid={}".format(sid)
         user_name = self.parse_query_param("user_name")
-        sessions[sid] = {"user_name": user_name, "useragent": "unknown", "ip address": self.client_address, "expiry": "unknown"}
+        # TODO auto translate according to header: 'Accept-Language'
+        sessions[sid] = {"user_name": user_name, "useragent": self.try_get_header('User-Agent'), "ip address": self.client_address, "expiry": None}
         return """
         <p>Logged In<p>
         <a href='/'>Start Playing!</a>
 """
+
+    def try_get_header(self, header):
+        if header in self.headers:
+            return self.headers[header]
+        return None
 
     def logout(self):
         if not self.user:
