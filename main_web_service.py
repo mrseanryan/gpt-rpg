@@ -107,12 +107,8 @@ class MyServer(BaseHTTPRequestHandler):
             history = bot_history[self.user]
             state = states[self.user]
             user_input = self.parse_query_param("user_input")
-            # xxx de-dupe
-            (next_section_text, current_location_name) = main_service.get_next(state, user_input)
-            history['previous_messages'].append(f"LOCATION: {current_location_name}")
-            history['previous_messages'].append(f" >> {next_section_text}")
-            content += self.bot_previous_messages()
-            content += self.bot_next_button()
+            previous_messages = history['previous_messages']
+            content += self.get_next_state(state, user_input, previous_messages)
         else:
             bot_history[self.user] = history
             # TODO allow user to pick genre
@@ -121,13 +117,19 @@ class MyServer(BaseHTTPRequestHandler):
             states[self.user] = state
             initial_text = main_service.get_initial_text(state)
             history['previous_messages'] = [initial_text]
-            # xxx de-dupe
-            (next_section_text, current_location_name) = main_service.get_next(state, None)
-            history['previous_messages'].append(f"LOCATION: {current_location_name}")
-            history['previous_messages'].append(f" >> {next_section_text}")
-            content += self.bot_previous_messages()
-            content += self.bot_next_button()
+            previous_messages = history['previous_messages']
+            content += self.get_next_state(state, None, previous_messages)
         content += self.html_end()
+        return content
+
+    def get_next_state(self, state, user_input, previous_messages):
+        (next_section_text, current_location_name) = main_service.get_next(state, user_input)
+        if user_input is not None:
+            previous_messages.append(user_input)
+        previous_messages.append(f"LOCATION: {current_location_name}")
+        previous_messages.append(f" >> {next_section_text}")
+        content = self.bot_previous_messages()
+        content += self.bot_next_button()
         return content
 
     def bot_previous_messages(self):

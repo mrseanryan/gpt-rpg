@@ -27,6 +27,7 @@ def get_next(state, user_input):
     next_rsp_parsed = None
     retries_remaining = config.RETRY_COUNT
     while(not next_rsp_parsed and retries_remaining > 0):
+        rsp = None
         try:
             rsp = util_chat.next_prompt(prompt)
             next_rsp_parsed = json.loads(rsp, strict=False)
@@ -38,6 +39,10 @@ def get_next(state, user_input):
             prompt = prompts.build_next_prompt(state["story_type"], state["user_name"], next_section_text, user_input, prompts.OUTPUT_FORMAT_NO_ASCII)
             retries_remaining -= 1
 
-    state["next_section_text"] = next_rsp_parsed["next_section_text"]
+    if next_rsp_parsed is None:
+        print(f"!!! RETRIES EXPIRED !!!")
+        return(next_section_text, "(unknown)")
+    else:
+        state["next_section_text"] = next_rsp_parsed["next_section_text"]
 
     return (next_rsp_parsed["next_section_text"], next_rsp_parsed["current_location_name"])
