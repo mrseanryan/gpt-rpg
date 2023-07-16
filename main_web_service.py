@@ -20,6 +20,7 @@ class MyServer(BaseHTTPRequestHandler):
         routes = {
             "/login":   self.login,
             "/logout":  self.logout,
+            "/sessions":   self.sessions,
             "/":        self.home
         }
         self.cookie = None
@@ -35,7 +36,7 @@ class MyServer(BaseHTTPRequestHandler):
                 self.user_name = None
             path = self.parse_path()
             print(f"req path: '{path}'")
-            content = routes[path]()
+            content = self.html_start() + routes[path]() + self.html_end()
         except Exception as error:
             print("!! error: ", error)
             response = 404
@@ -55,7 +56,7 @@ class MyServer(BaseHTTPRequestHandler):
         sid = self.generate_sid()
         self.cookie = "sid={}".format(sid)
         user_name = self.parse_query_param("user_name")
-        sessions[sid] = {"user_name": user_name, "useragent": "unknown", "ip address": "unknown", "expiry": "unknown"}
+        sessions[sid] = {"user_name": user_name, "useragent": "unknown", "ip address": self.client_address, "expiry": "unknown"}
         return """
         <p>Logged In<p>
         <a href='/'>Start Playing!</a>
@@ -73,6 +74,15 @@ class MyServer(BaseHTTPRequestHandler):
         <a href='/'>Go back</a>
 """
 
+    # TODO restrict access!
+    def sessions(self):
+        content = "<pre>\n"
+        content += "User Sessions:\n"
+        for session in sessions:
+            content += f"{sessions[session]}\n"
+        content += "</pre>\n"
+        return content
+
     def html_start(self):
         content = "<html><head><title>gpt-rpg</title></head>"
         content += "<body>"
@@ -83,7 +93,7 @@ class MyServer(BaseHTTPRequestHandler):
         return "</body></html>"
 
     def home(self):
-        content = self.html_start()
+        content = ""
         if self.user:
             content += f"Welcome {self.user_name}!"
             content += f"<a href='logout'>log out</a>"
@@ -98,11 +108,10 @@ class MyServer(BaseHTTPRequestHandler):
                 <input type="submit" value="Go!">
             </form>
               """
-        content += self.html_end()
         return content
 
     def bot(self):
-        content = self.html_start()
+        content = ""
         history = dict()
         if self.user in bot_history:
             history = bot_history[self.user]
@@ -120,7 +129,6 @@ class MyServer(BaseHTTPRequestHandler):
             history['previous_messages'] = [initial_text]
             previous_messages = history['previous_messages']
             content += self.get_next_state(state, None, previous_messages)
-        content += self.html_end()
         return content
 
     def get_next_state(self, state, user_input, previous_messages):
@@ -156,7 +164,13 @@ class MyServer(BaseHTTPRequestHandler):
         return parse_qs(urlparse(self.path).query)
 
     def parse_query_param(self, param):
-        return self.parse_query_params()[param][0]
+        params = self.parse_query_params()
+        if param in params:
+            value_array = params[param]
+            if value_array is None:
+                return ""
+            return value_array[0]
+        return ""
 
     def parse_cookies(self, cookie_list):
         return dict(((c.split("=")) for c in cookie_list.split(";"))) if cookie_list else {}
