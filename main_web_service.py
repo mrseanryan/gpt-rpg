@@ -184,7 +184,18 @@ class MyServer(BaseHTTPRequestHandler):
     def write(self, content):
         self.wfile.write(bytes(content, "utf-8"))
 
-if __name__ == "__main__":
+def start_single_threaded():
+    # Single threaded so can debug!
+    webServer = HTTPServer((config.HOSTNAME, config.PORT), MyServer)
+    print("Server started http://%s:%s" % (config.HOSTNAME, config.PORT))
+    try:
+        webServer.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    webServer.server_close()
+    print("Server stopped.")
+
+def start_multi_threaded():
     # Multi-threaded server, else performance is terrible
     # ref https://stackoverflow.com/questions/46210672/python-2-7-streaming-http-server-supporting-multiple-connections-on-one-port
     #
@@ -222,3 +233,9 @@ if __name__ == "__main__":
     input("Press ENTER to kill server")
 
     print("Server stopped.")
+
+if __name__ == "__main__":
+    if config.is_debug:
+        start_single_threaded()
+    else:
+        start_multi_threaded()
