@@ -58,6 +58,29 @@ into the temple, the artifact calling out to them. The flickering torches along 
 ---
 ```
 
+## Special commands [CLI only]
+
+There are some special commands available:
+
+- image
+- show
+- view
+
+Typing one of these commands generates an image of the current scene.
+A link is output - to view the DAL-E generated image, simply click the link.
+
+Fresh images are generated for each request, by DAL-E.
+
+Here are some examples:
+
+![RPG Image 1](images/gpt-rpg-1.png)
+
+![RPG Image 2](images/gpt-rpg-2.png)
+
+![RPG Image 3](images/gpt-rpg-3.png)
+
+note: image generation is a little [more expensive](https://realpython.com/generate-images-with-dalle-openai-api/#understand-pricing-for-dalle-and-other-openai-api-products) than text generation.
+
 ## Set up
 
 1. Install openai Python client.

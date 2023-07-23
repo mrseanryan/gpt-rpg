@@ -2,7 +2,7 @@ import json
 
 import config
 import prompts
-import util_chat
+import service_chat
 import util_wait
 
 def get_initial_state(story_type, user_name):
@@ -29,7 +29,7 @@ def get_next(state, user_input):
     while(not next_rsp_parsed and retries_remaining > 0):
         rsp = None
         try:
-            rsp = util_chat.next_prompt(prompt)
+            rsp = service_chat.next_prompt(prompt)
             next_rsp_parsed = json.loads(rsp, strict=False)
         except Exception as error:
             print("!! error: ", error)
