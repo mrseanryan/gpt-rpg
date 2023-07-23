@@ -5,6 +5,7 @@ import time, threading, socket
 
 import config
 import main_service
+import service_images
 import prompts
 import util_pick
 
@@ -109,7 +110,7 @@ class MyServer(BaseHTTPRequestHandler):
             content += "Welcome Stranger!"
             content += """
             <form action="/login">
-                <label for="user_name">To start playing, please enter your name:</label><br>
+                <label for="user_name">To start playing, please enter your name: (avoid celebrity names, for image generation)</label><br>
                 <input type="text" id="user_name" name="user_name">
                 <input type="submit" value="Go!">
             </form>
@@ -123,8 +124,22 @@ class MyServer(BaseHTTPRequestHandler):
             history = bot_history[self.user]
             state = states[self.user]
             user_input = self.parse_query_param("user_input")
-            previous_messages = history['previous_messages']
-            content += self.get_next_state(state, user_input, previous_messages)
+            last_text = history['last_text'] if 'last_text' in history else None
+            if service_images.is_image_prompt(user_input):
+                image_content = ""
+                if last_text is not None:
+                    try:
+                        print("requesting image...")
+                        image_url = service_images.generate_image(last_text, history['story_type'])
+                        image_content = f"<img src='{image_url}'>"
+                        history['previous_messages'].append(image_content)
+                    except Exception as ex:
+                        print(ex)
+                    content = self.bot_previous_messages()
+                    content += self.bot_next_button()
+            else:
+                previous_messages = history['previous_messages']
+                content += self.get_next_state(state, user_input, previous_messages)
         else:
             bot_history[self.user] = history
             # TODO allow user to pick genre
@@ -133,6 +148,7 @@ class MyServer(BaseHTTPRequestHandler):
             states[self.user] = state
             initial_text = main_service.get_initial_text(state)
             history['previous_messages'] = [initial_text]
+            history['story_type'] = story_type
             previous_messages = history['previous_messages']
             content += self.get_next_state(state, None, previous_messages)
         return content
@@ -145,6 +161,8 @@ class MyServer(BaseHTTPRequestHandler):
         previous_messages.append(f" >> {next_section_text}")
         content = self.bot_previous_messages()
         content += self.bot_next_button()
+        history = bot_history[self.user]
+        history['last_text'] = next_section_text
         return content
 
     def bot_previous_messages(self):
@@ -154,7 +172,7 @@ class MyServer(BaseHTTPRequestHandler):
     def bot_next_button(self):
         return f"""
             <form action="/">
-                <label for="user_input">What's next, {self.user_name}?</label><br>
+                <label for="user_input">What's next, {self.user_name}? (type image to generate art!)</label><br>
                 <input type="text" id="user_input" name="user_input">
                 <input type="submit" value="Go!">
             </form>

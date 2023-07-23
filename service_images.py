@@ -18,7 +18,7 @@ def generate_image(last_text, story_type):
     response = openai.Image.create(
         prompt=prompt,
         n=1,
-        size="1024x1024",
+        size="512x512" # "1024x1024",
     )
 
     image_url = response["data"][0]["url"]
