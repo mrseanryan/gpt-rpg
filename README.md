@@ -79,6 +79,12 @@ Here are some examples:
 
 ![RPG Image 3](images/gpt-rpg-3.png)
 
+![sci-fi 1](images/sci-fi-1.png)
+
+![sci-fi 2](images/sci-fi-2.png)
+
+![sci-fi 3](images/sci-fi-3.png)
+
 note: image generation is a little [more expensive](https://realpython.com/generate-images-with-dalle-openai-api/#understand-pricing-for-dalle-and-other-openai-api-products) than text generation.
 
 ## Set up
