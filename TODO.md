@@ -5,8 +5,8 @@
 k -- choice of starting points
 -- save command -> store last response JSON
 
-- make a web server
-- add a simple web client (HTML)
+k - make a web server
+k - add a simple web client (HTML)
 
 - add service role -> adult audience, advanced reader
 

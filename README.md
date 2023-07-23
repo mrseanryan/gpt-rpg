@@ -13,7 +13,7 @@ A simple RPG game built on Chat-GPT
 
 ```
 What is your name? >>Sean
-['short', 'RPG', 'zombie', 'medieval', 'vampire']
+['sci-fi', 'RPG', 'zombie', 'medieval', 'vampire']
 Please pick one >>zombie
 
     The world had changed. The dead walked among the living, their hunger insatiable. Survivors huddled in abandoned buildings,

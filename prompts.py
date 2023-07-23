@@ -6,7 +6,7 @@ The output format must be JSON, with the fields: next_section_text, current_loca
 # ASCII ART is un-reliable, so removed it.
 OUTPUT_FORMAT = OUTPUT_FORMAT_NO_ASCII
 
-def _get_SHORT_STORY_PROMPT(user_name):
+def _get_SCI_FI_PROMPT(user_name):
     return f"""
     {user_name} awoke from the ice cold grip of the cryo chamber, their body and mind aching from the trauma of a deep and un-natural sleep.
     Unsure of where they were, and how much of their mind was still of human flesh, {user_name} struggled to sit up.
@@ -53,8 +53,8 @@ def build_next_prompt(story_type, user_name, next_section_text, user_input, form
     """
 
 def get_initial_text(story_type, user_name):
-    if story_type == "short":
-        return _get_SHORT_STORY_PROMPT(user_name)
+    if story_type == "sci-fi":
+        return _get_SCI_FI_PROMPT(user_name)
     elif story_type == "RPG":
         return _get_RPG_PROMPT(user_name)
     elif story_type == "zombie":
@@ -83,4 +83,4 @@ def get_first_prompt(story_type, initial_text):
     """
 
 def get_story_types():
-    return ['short', 'RPG', 'zombie', 'medieval', 'vampire']
+    return ['sci-fi', 'RPG', 'zombie', 'medieval', 'vampire']

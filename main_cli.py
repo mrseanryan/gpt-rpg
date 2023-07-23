@@ -6,7 +6,7 @@ import service_images
 
 user_name = input("What is your name? >>")
 
-# note: short seems more 'grown up' than RPG
+# note: sci-fi seems more 'grown up' than RPG
 story_type = util_pick.pick_one_by_prompt(prompts.get_story_types())
 
 def handle_image_prompt(last_text):

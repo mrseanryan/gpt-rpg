@@ -141,9 +141,23 @@ class MyServer(BaseHTTPRequestHandler):
                 previous_messages = history['previous_messages']
                 content += self.get_next_state(state, user_input, previous_messages)
         else:
+            if 'story_type' not in history:
+                # Allow user to pick the genre
+                user_input = self.parse_query_param("user_input")
+                try:
+                    story_type_id = int(user_input)
+                    story_type = prompts.get_story_types()[story_type_id - 1]
+                    history['story_type'] = story_type
+                except Exception:
+                    story_type = util_pick.pick_one(prompts.get_story_types())
+                    content = f"Please pick a story line - enter a number:<br/>"
+                    i = 1
+                    for story_type in prompts.get_story_types():
+                        content += f"- [{i}] {story_type}<br/>"
+                        i = i + 1
+                    content += self.bot_next_button()
+                    return content
             bot_history[self.user] = history
-            # TODO allow user to pick genre
-            story_type = util_pick.pick_one(prompts.get_story_types())
             state = main_service.get_initial_state(story_type, self.user_name)
             states[self.user] = state
             initial_text = main_service.get_initial_text(state)
