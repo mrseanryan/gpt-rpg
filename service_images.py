@@ -1,8 +1,8 @@
 import openai
 
-import api_key_chatgpt_local as api_key
+import service_api_key
 
-openai.api_key = api_key.get_openai_key()
+openai.api_key = service_api_key.get_openai_key()
 
 def generate_image(last_text, story_type):
     image_url = None
